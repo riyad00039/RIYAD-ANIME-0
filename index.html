@@ -1,0 +1,3738 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رياض أنمي | Riyad Anime | أول منصة عربية متكاملة للأنمي</title>
+    <meta name="description" content="أول منصة عربية متكاملة لمشاهدة وتحميل الأنمي العربي، نقدم أحدث وأجود الأنمي المترجم بعناية فائقة">
+    <meta name="keywords" content="أنمي, عربي, مشاهدة, دراغون بول, ناروتو, ون بيس, هجوم العمالقة">
+    <meta name="author" content="رياض أنمي">
+    <meta name="theme-color" content="#ff2a2a">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    
+    <!-- Video.js -->
+    <link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet">
+    
+    <style>
+        /* CSS Styles - All in one */
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-tertiary: #1a1a1a;
+            --bg-card: #141414;
+            --bg-overlay: rgba(0, 0, 0, 0.85);
+            --accent-red: #ff2a2a;
+            --accent-red-dark: #cc0000;
+            --accent-red-light: #ff6b6b;
+            --accent-blue: #2a9dff;
+            --accent-purple: #9d4edd;
+            --accent-green: #2a9d8f;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --text-tertiary: #666666;
+            --text-inverted: #000000;
+            --border-color: #333333;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+            --hover-overlay: rgba(255, 42, 42, 0.1);
+            --gradient-red: linear-gradient(135deg, #ff2a2a, #ff6b6b);
+            --gradient-dark: linear-gradient(135deg, #111111, #222222);
+            --gradient-card: linear-gradient(180deg, rgba(20,20,20,0.8), rgba(10,10,10,1));
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 20px rgba(255, 42, 42, 0.3);
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 20px;
+            --radius-circle: 50%;
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-xxl: 48px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            direction: rtl;
+        }
+
+        /* Animations */
+        @keyframes glow {
+            0%, 100% {
+                text-shadow: 0 0 10px var(--accent-red),
+                             0 0 20px var(--accent-red),
+                             0 0 30px var(--accent-red);
+            }
+            50% {
+                text-shadow: 0 0 20px var(--accent-red),
+                             0 0 40px var(--accent-red),
+                             0 0 60px var(--accent-red);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .loading-content {
+            text-align: center;
+        }
+
+        .loading-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .loading-logo i {
+            color: var(--accent-red);
+            font-size: 48px;
+            animation: pulse 2s infinite;
+        }
+
+        .loading-logo h1 {
+            font-size: 36px;
+            background: var(--gradient-red);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 3s infinite alternate;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--bg-secondary);
+            border-top: 4px solid var(--accent-red);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto var(--spacing-lg);
+        }
+
+        /* Header */
+        header {
+            background: var(--bg-secondary);
+            border-bottom: 2px solid var(--accent-red);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-md) var(--spacing-lg);
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .logo-icon {
+            color: var(--accent-red);
+            font-size: 28px;
+            animation: pulse 2s infinite;
+        }
+
+        .glowing-text {
+            font-size: 28px;
+            font-weight: 900;
+            background: var(--gradient-red);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 3s infinite alternate;
+            letter-spacing: 1px;
+        }
+
+        /* Search Container */
+        .search-container {
+            flex: 1;
+            max-width: 600px;
+            margin: 0 var(--spacing-xl);
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 20px;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            color: var(--text-primary);
+            font-size: 16px;
+            transition: var(--transition-normal);
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--accent-red);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .search-btn {
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--gradient-red);
+            border: none;
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition-normal);
+        }
+
+        .search-btn:hover {
+            background: var(--accent-red-dark);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 100%;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1000;
+        }
+
+        .search-result-item {
+            padding: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .search-result-item:hover {
+            background: var(--hover-overlay);
+        }
+
+        /* User Actions */
+        .user-actions {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+
+        .login-btn, .register-btn {
+            padding: 10px 24px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            border: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .login-btn {
+            background: transparent;
+            border: 2px solid var(--accent-red);
+            color: var(--accent-red);
+        }
+
+        .login-btn:hover {
+            background: var(--accent-red);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+
+        .register-btn {
+            background: var(--gradient-red);
+            color: var(--text-primary);
+        }
+
+        .register-btn:hover {
+            background: var(--accent-red-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 24px;
+            cursor: pointer;
+            padding: var(--spacing-sm);
+        }
+
+        /* Container */
+        .container {
+            display: flex;
+            min-height: calc(100vh - 72px);
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--bg-secondary);
+            border-left: 1px solid var(--border-color);
+            position: sticky;
+            top: 72px;
+            height: calc(100vh - 72px);
+            overflow-y: auto;
+            transition: var(--transition-normal);
+            animation: slideInLeft 0.5s ease;
+        }
+
+        .sidebar-header {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sidebar-header h3 {
+            color: var(--accent-red);
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .sidebar-close {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 20px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .sidebar-close:hover {
+            color: var(--accent-red);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: var(--spacing-lg);
+        }
+
+        .sidebar-menu li {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: 12px 16px;
+            margin-bottom: var(--spacing-sm);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition-normal);
+            color: var(--text-secondary);
+            position: relative;
+        }
+
+        .sidebar-menu li:hover {
+            background: var(--hover-overlay);
+            color: var(--accent-red);
+            transform: translateX(-5px);
+        }
+
+        .sidebar-menu li.active {
+            background: var(--hover-overlay);
+            color: var(--accent-red);
+            border-right: 3px solid var(--accent-red);
+            font-weight: 600;
+        }
+
+        .sidebar-menu li i {
+            width: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .sidebar-menu li .badge {
+            margin-right: auto;
+            background: var(--accent-red);
+            color: var(--text-primary);
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: var(--radius-sm);
+        }
+
+        .sidebar-footer {
+            padding: var(--spacing-lg);
+            border-top: 1px solid var(--border-color);
+            margin-top: auto;
+        }
+
+        .sidebar-footer h4 {
+            color: var(--accent-red);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .theme-switch {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-secondary);
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: var(--border-color);
+            transition: var(--transition-normal);
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: var(--text-primary);
+            transition: var(--transition-normal);
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--accent-red);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(-26px);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: var(--spacing-xl);
+            overflow-y: auto;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: var(--gradient-card);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xxl);
+            margin-bottom: var(--spacing-xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1541562232579-512a21360020?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') center/cover;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .hero-content h2 {
+            font-size: 48px;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .hero-content .highlight {
+            color: var(--accent-red);
+            background: var(--gradient-red);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: var(--spacing-xxl);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat i {
+            font-size: 36px;
+            color: var(--accent-red);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .stat span {
+            display: block;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .stat small {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Sections */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .section-title {
+            font-size: 24px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin: 0;
+        }
+
+        .section-title i {
+            color: var(--accent-red);
+        }
+
+        .view-all {
+            color: var(--accent-red);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            transition: var(--transition-fast);
+        }
+
+        .view-all:hover {
+            color: var(--accent-red-light);
+            transform: translateX(-5px);
+        }
+
+        /* Categories */
+        .categories-section {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .category-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            border: 2px solid transparent;
+        }
+
+        .category-card:hover {
+            border-color: var(--accent-red);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .category-card i {
+            font-size: 32px;
+            color: var(--accent-red);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .category-card h4 {
+            font-size: 18px;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .category-card p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Anime Grid */
+        .anime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .anime-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: var(--transition-normal);
+            cursor: pointer;
+            position: relative;
+            border: 1px solid var(--border-color);
+        }
+
+        .anime-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-red);
+        }
+
+        .anime-card:hover .anime-image {
+            transform: scale(1.05);
+        }
+
+        .anime-image {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            transition: var(--transition-normal);
+        }
+
+        .anime-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--accent-red);
+            color: var(--text-primary);
+            padding: 4px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 1;
+        }
+
+        .anime-actions {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
+            z-index: 1;
+        }
+
+        .action-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-circle);
+            background: rgba(0, 0, 0, 0.8);
+            border: none;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .action-btn:hover {
+            background: var(--accent-red);
+            transform: scale(1.1);
+        }
+
+        .action-btn.active {
+            background: var(--accent-red);
+        }
+
+        .anime-info {
+            padding: var(--spacing-md);
+        }
+
+        .anime-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.4;
+            height: 44px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .anime-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .rating {
+            color: gold;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .anime-genres {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-xs);
+        }
+
+        .genre-tag {
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            padding: 2px 8px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            text-align: center;
+            padding: var(--spacing-xxl);
+        }
+
+        .loading-spinner .spinner {
+            width: 40px;
+            height: 40px;
+            margin-bottom: var(--spacing-md);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: var(--spacing-xxl);
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            color: var(--border-color);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .empty-state h3 {
+            font-size: 24px;
+            margin-bottom: var(--spacing-md);
+            color: var(--text-secondary);
+        }
+
+        .empty-state p {
+            font-size: 16px;
+            color: var(--text-tertiary);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-overlay);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            width: 90%;
+            max-width: 500px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 2px solid var(--accent-red);
+            animation: slideInRight 0.5s ease;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-header {
+            padding: var(--spacing-lg);
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header h3 {
+            color: var(--accent-red);
+            font-size: 20px;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 28px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-circle);
+        }
+
+        .close-modal:hover {
+            color: var(--accent-red);
+            background: var(--hover-overlay);
+        }
+
+        .modal-body {
+            padding: var(--spacing-xl);
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            margin-bottom: var(--spacing-xl);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab {
+            flex: 1;
+            padding: var(--spacing-md);
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: var(--transition-normal);
+            position: relative;
+        }
+
+        .tab.active {
+            color: var(--accent-red);
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            right: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-red);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-secondary);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 16px;
+            transition: var(--transition-normal);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-red);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .show-password {
+            position: absolute;
+            left: 16px;
+            top: 42px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .show-password:hover {
+            color: var(--accent-red);
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .checkbox input {
+            width: 16px;
+            height: 16px;
+        }
+
+        .forgot-password {
+            color: var(--accent-red);
+            text-decoration: none;
+            font-size: 14px;
+            transition: var(--transition-fast);
+        }
+
+        .forgot-password:hover {
+            color: var(--accent-red-light);
+        }
+
+        /* Buttons */
+        .google-login {
+            width: 100%;
+            padding: 14px;
+            background: #4285F4;
+            border: none;
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .google-login:hover {
+            background: #3367D6;
+            transform: translateY(-2px);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--gradient-red);
+            border: none;
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+        }
+
+        .submit-btn:hover {
+            background: var(--accent-red-dark);
+            transform: translateY(-2px);
+        }
+
+        .divider {
+            text-align: center;
+            margin: var(--spacing-lg) 0;
+            color: var(--text-secondary);
+            position: relative;
+            font-size: 14px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .divider::before {
+            right: 0;
+        }
+
+        .divider::after {
+            left: 0;
+        }
+
+        /* Video Player */
+        .video-player-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-overlay);
+            z-index: 3000;
+            padding: var(--spacing-lg);
+        }
+
+        .video-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .video-header h2 {
+            font-size: 24px;
+            color: var(--text-primary);
+        }
+
+        .player-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .player-btn {
+            padding: 8px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-size: 14px;
+        }
+
+        .player-btn:hover {
+            background: var(--accent-red);
+            color: var(--text-primary);
+            border-color: var(--accent-red);
+        }
+
+        .close-player {
+            background: var(--gradient-red);
+            border: none;
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-circle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+            transition: var(--transition-normal);
+        }
+
+        .close-player:hover {
+            background: var(--accent-red-dark);
+            transform: rotate(90deg);
+        }
+
+        .video-wrapper {
+            width: 100%;
+            height: 70vh;
+            background: #000;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .video-js {
+            width: 100%;
+            height: 100%;
+        }
+
+        .player-info {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+        }
+
+        .episode-info {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .episode-info h3 {
+            font-size: 20px;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .episode-meta {
+            display: flex;
+            gap: var(--spacing-xl);
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .episode-meta i {
+            color: var(--accent-red);
+            margin-left: var(--spacing-xs);
+        }
+
+        .episode-navigation {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xl);
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            background: var(--gradient-red);
+            border: none;
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-red-dark);
+            transform: translateY(-2px);
+        }
+
+        .episode-selector {
+            flex: 1;
+        }
+
+        .episode-selector h4 {
+            margin-bottom: var(--spacing-md);
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        .episode-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            max-height: 120px;
+            overflow-y: auto;
+            padding: var(--spacing-sm);
+        }
+
+        .episode-btn {
+            padding: 8px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            font-size: 14px;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .episode-btn:hover {
+            background: var(--hover-overlay);
+            color: var(--accent-red);
+        }
+
+        .episode-btn.active {
+            background: var(--accent-red);
+            color: var(--text-primary);
+            border-color: var(--accent-red);
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            background: var(--gradient-red);
+            color: var(--text-primary);
+            padding: 16px 24px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            z-index: 4000;
+            display: none;
+            align-items: center;
+            gap: var(--spacing-md);
+            animation: slideInRight 0.5s ease;
+            max-width: 400px;
+        }
+
+        .notification i {
+            font-size: 20px;
+        }
+
+        /* Seasons Styles */
+        .seasons-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .season-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            cursor: pointer;
+            transition: var(--transition-normal);
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .season-card:hover {
+            border-color: var(--accent-red);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .season-card h3 {
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+            font-size: 18px;
+        }
+
+        .season-anime-count {
+            color: var(--accent-red);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .season-tag {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--accent-red);
+            color: var(--text-primary);
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Anime Details */
+        .anime-detail-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .back-btn {
+            background: var(--gradient-red);
+            border: none;
+            color: var(--text-primary);
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            transition: var(--transition-normal);
+        }
+
+        .back-btn:hover {
+            background: var(--accent-red-dark);
+            transform: translateX(-5px);
+        }
+
+        .anime-detail-title {
+            font-size: 32px;
+            color: var(--text-primary);
+        }
+
+        .anime-detail-content {
+            display: flex;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .anime-poster {
+            flex: 0 0 300px;
+        }
+
+        .anime-poster img {
+            width: 100%;
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .anime-actions-detail {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .action-btn-detail {
+            padding: 12px 20px;
+            background: var(--gradient-red);
+            border: none;
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+        }
+
+        .action-btn-detail:hover {
+            background: var(--accent-red-dark);
+            transform: translateY(-2px);
+        }
+
+        .favorite-btn-detail.active {
+            background: var(--accent-red-dark);
+        }
+
+        .anime-info-detail {
+            flex: 1;
+        }
+
+        .anime-meta-detail {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+            color: var(--text-secondary);
+        }
+
+        .rating-detail {
+            color: gold;
+            font-weight: 600;
+        }
+
+        .anime-synopsis {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .anime-synopsis h3 {
+            color: var(--accent-red);
+            margin-bottom: var(--spacing-md);
+            font-size: 20px;
+        }
+
+        .anime-genres-detail {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .genre-tag-detail {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+        }
+
+        .anime-episodes {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .anime-episodes h3 {
+            color: var(--accent-red);
+            margin-bottom: var(--spacing-lg);
+            font-size: 20px;
+        }
+
+        .episodes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: var(--spacing-sm);
+        }
+
+        .episode-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .episode-card:hover {
+            border-color: var(--accent-red);
+            transform: translateY(-2px);
+        }
+
+        .episode-number {
+            display: block;
+            color: var(--accent-red);
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .episode-title {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Countdown Timer */
+        .countdown-timer {
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+            text-align: center;
+        }
+
+        .countdown-timer h4 {
+            color: var(--accent-red);
+            margin-bottom: var(--spacing-md);
+            font-size: 18px;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-md);
+        }
+
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .countdown-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-red);
+            background: var(--bg-card);
+            padding: 8px 12px;
+            border-radius: var(--radius-md);
+            min-width: 50px;
+        }
+
+        .countdown-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: var(--spacing-xs);
+        }
+
+        /* Season Filters */
+        .season-filter {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+
+        .season-filter-btn {
+            padding: 8px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            font-size: 14px;
+        }
+
+        .season-filter-btn:hover {
+            background: var(--hover-overlay);
+            color: var(--accent-red);
+        }
+
+        .season-filter-btn.active {
+            background: var(--accent-red);
+            color: var(--text-primary);
+            border-color: var(--accent-red);
+        }
+
+        /* Profile Section */
+        .profile-section {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--gradient-red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+        }
+
+        .profile-info h2 {
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .profile-info p {
+            color: var(--text-secondary);
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .profile-stat {
+            text-align: center;
+        }
+
+        .profile-stat span {
+            display: block;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-red);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .profile-stat small {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .sidebar {
+                position: fixed;
+                right: -280px;
+                top: 0;
+                height: 100vh;
+                z-index: 1001;
+                transition: var(--transition-normal);
+            }
+            
+            .sidebar.active {
+                right: 0;
+            }
+            
+            .sidebar-close {
+                display: block;
+            }
+            
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .search-container {
+                margin: 0 var(--spacing-md);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .header-container {
+                flex-wrap: wrap;
+            }
+            
+            .search-container {
+                order: 3;
+                width: 100%;
+                margin: var(--spacing-md) 0 0 0;
+            }
+            
+            .hero-content h2 {
+                font-size: 36px;
+            }
+            
+            .hero-stats {
+                gap: var(--spacing-xl);
+            }
+            
+            .stat span {
+                font-size: 24px;
+            }
+            
+            .anime-detail-content {
+                flex-direction: column;
+            }
+            
+            .anime-poster {
+                flex: none;
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: var(--spacing-md);
+            }
+            
+            .hero-section {
+                padding: var(--spacing-xl);
+            }
+            
+            .hero-content h2 {
+                font-size: 28px;
+            }
+            
+            .hero-content p {
+                font-size: 16px;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: var(--spacing-lg);
+            }
+            
+            .anime-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: var(--spacing-md);
+            }
+            
+            .anime-image {
+                height: 240px;
+            }
+            
+            .categories-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .video-wrapper {
+                height: 50vh;
+            }
+            
+            .episode-navigation {
+                flex-direction: column;
+                gap: var(--spacing-lg);
+            }
+            
+            .nav-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .header-container {
+                padding: var(--spacing-md);
+            }
+            
+            .logo h1 {
+                font-size: 20px;
+            }
+            
+            .user-actions {
+                gap: var(--spacing-sm);
+            }
+            
+            .login-btn, .register-btn {
+                padding: 8px 16px;
+                font-size: 12px;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: var(--spacing-md);
+            }
+            
+            .anime-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .seasons-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Custom Video.js Theme */
+        .video-js .vjs-big-play-button {
+            background: var(--gradient-red) !important;
+            border: none !important;
+            width: 80px !important;
+            height: 80px !important;
+            border-radius: var(--radius-circle) !important;
+            line-height: 80px !important;
+            font-size: 40px !important;
+        }
+
+        .video-js .vjs-control-bar {
+            background: var(--bg-overlay) !important;
+        }
+
+        .video-js .vjs-play-progress {
+            background: var(--gradient-red) !important;
+        }
+
+        .video-js .vjs-slider {
+            background: var(--bg-tertiary) !important;
+        }
+
+        .video-js .vjs-menu-button-popup .vjs-menu {
+            background: var(--bg-secondary) !important;
+        }
+
+        .video-js .vjs-menu-item {
+            color: var(--text-primary) !important;
+        }
+
+        .video-js .vjs-menu-item:hover {
+            background: var(--hover-overlay) !important;
+        }
+
+        /* Error Message */
+        .error-message {
+            background: var(--accent-red);
+            color: var(--text-primary);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            margin: var(--spacing-md) 0;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <i class="fas fa-fire"></i>
+                <h1 class="glowing-text">RIYAD ANIME</h1>
+            </div>
+            <div class="spinner"></div>
+            <p>جاري تحميل الأنمي...</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-fire logo-icon"></i>
+                <h1 class="glowing-text">RIYAD ANIME</h1>
+            </div>
+            
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="search-container">
+                <input type="text" class="search-box" id="searchBox" placeholder="ابحث عن الأنمي، الشخصيات، الحلقات...">
+                <button class="search-btn" id="searchBtn">
+                    <i class="fas fa-search"></i>
+                </button>
+                <div class="search-results" id="searchResults"></div>
+            </div>
+            
+            <div class="user-actions">
+                <button class="login-btn" id="openLoginBtn">
+                    <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+                </button>
+                <button class="register-btn" id="openRegisterBtn">
+                    <i class="fas fa-user-plus"></i> إنشاء حساب
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-bars"></i>القائمة الرئيسية</h3>
+                <button class="sidebar-close" id="sidebarClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <li class="active" data-section="home">
+                    <i class="fas fa-home"></i>
+                    <span>الصفحة الرئيسية</span>
+                </li>
+                <li data-section="latest">
+                    <i class="fas fa-bolt"></i>
+                    <span>أحدث الإصدارات</span>
+                    <span class="badge" id="latestCount">0</span>
+                </li>
+                <li data-section="popular">
+                    <i class="fas fa-chart-line"></i>
+                    <span>الأكثر مشاهدة</span>
+                    <span class="badge" id="popularCount">0</span>
+                </li>
+                <li data-section="trending">
+                    <i class="fas fa-fire"></i>
+                    <span>الأكثر انتشاراً</span>
+                    <span class="badge" id="trendingCount">0</span>
+                </li>
+                <li data-section="seasons">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>مواسم الأنمي</span>
+                    <span class="badge" id="seasonsCount">0</span>
+                </li>
+                <li data-section="favorites">
+                    <i class="fas fa-heart"></i>
+                    <span>قائمتي المفضلة</span>
+                    <span class="badge" id="favoritesCount">0</span>
+                </li>
+                <li data-section="history">
+                    <i class="fas fa-history"></i>
+                    <span>المشاهد مؤخراً</span>
+                    <span class="badge" id="historyCount">0</span>
+                </li>
+                <li data-section="watchlist">
+                    <i class="fas fa-bookmark"></i>
+                    <span>قائمة المشاهدة</span>
+                    <span class="badge" id="watchlistCount">0</span>
+                </li>
+                <li data-section="genres">
+                    <i class="fas fa-tags"></i>
+                    <span>التصنيفات</span>
+                    <span class="badge" id="genresCount">12</span>
+                </li>
+                <li data-section="profile">
+                    <i class="fas fa-user"></i>
+                    <span>ملفي الشخصي</span>
+                </li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <h4><i class="fas fa-cog"></i> الإعدادات</h4>
+                <div class="theme-switch">
+                    <span>الوضع الداكن</span>
+                    <label class="switch">
+                        <input type="checkbox" id="themeSwitch" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Home Section -->
+            <section id="home-section" class="content-section active">
+                <div class="hero-section">
+                    <div class="hero-content">
+                        <h2 class="animate__animated animate__fadeInUp">مرحباً بك في <span class="highlight">رياض أنمي</span></h2>
+                        <p class="animate__animated animate__fadeInUp animate__delay-1s">أكبر منصة عربية لمشاهدة الأنمي بجودة عالية وترجمة احترافية</p>
+                        <div class="hero-stats animate__animated animate__fadeInUp animate__delay-2s">
+                            <div class="stat">
+                                <i class="fas fa-play-circle"></i>
+                                <span id="totalEpisodes">10,000+</span>
+                                <small>حلقة</small>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-film"></i>
+                                <span id="totalAnime">500+</span>
+                                <small>أنمي</small>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-users"></i>
+                                <span id="totalUsers">50,000+</span>
+                                <small>مستخدم</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Categories Filter -->
+                <div class="categories-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-filter"></i>
+                        <span>تصفح حسب التصنيف</span>
+                    </h3>
+                    <div class="categories-grid" id="categoriesGrid"></div>
+                </div>
+
+                <!-- Latest Anime -->
+                <div class="anime-section">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            <i class="fas fa-bolt"></i>
+                            <span>أحدث الأنمي المضافة</span>
+                        </h3>
+                        <a href="#" class="view-all" data-section="latest">عرض الكل <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                    <div class="loading-spinner" id="latestLoading">
+                        <div class="spinner"></div>
+                        <p>جاري تحميل أحدث الأنميات...</p>
+                    </div>
+                    <div class="anime-grid" id="latestAnime"></div>
+                </div>
+
+                <!-- Popular Anime -->
+                <div class="anime-section">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            <i class="fas fa-chart-line"></i>
+                            <span>الأكثر مشاهدة هذا الأسبوع</span>
+                        </h3>
+                        <a href="#" class="view-all" data-section="popular">عرض الكل <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                    <div class="loading-spinner" id="popularLoading">
+                        <div class="spinner"></div>
+                        <p>جاري تحميل الأنميات الأكثر مشاهدة...</p>
+                    </div>
+                    <div class="anime-grid" id="popularAnime"></div>
+                </div>
+
+                <!-- Trending Anime -->
+                <div class="anime-section">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            <i class="fas fa-fire"></i>
+                            <span>الأكثر انتشاراً</span>
+                        </h3>
+                        <a href="#" class="view-all" data-section="trending">عرض الكل <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                    <div class="loading-spinner" id="trendingLoading">
+                        <div class="spinner"></div>
+                        <p>جاري تحميل الأنميات الأكثر انتشاراً...</p>
+                    </div>
+                    <div class="anime-grid" id="trendingAnime"></div>
+                </div>
+            </section>
+
+            <!-- Seasons Section -->
+            <section id="seasons-section" class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-calendar-alt"></i>مواسم الأنمي</h2>
+                    <div class="season-filter">
+                        <button class="season-filter-btn active" data-season="all">الكل</button>
+                        <button class="season-filter-btn" data-season="winter">شتاء</button>
+                        <button class="season-filter-btn" data-season="spring">ربيع</button>
+                        <button class="season-filter-btn" data-season="summer">صيف</button>
+                        <button class="season-filter-btn" data-season="fall">خريف</button>
+                    </div>
+                </div>
+                <div class="error-message" id="seasonsError"></div>
+                <div class="seasons-container" id="seasonsContainer">
+                    <div class="loading-spinner" id="seasonsLoading">
+                        <div class="spinner"></div>
+                        <p>جاري تحميل المواسم...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profile Section -->
+            <section id="profile-section" class="content-section">
+                <div class="profile-section" id="profileContent">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="profile-info">
+                            <h2 id="profileUsername">مرحباً!</h2>
+                            <p id="profileEmail">سجل الدخول لعرض معلومات حسابك</p>
+                        </div>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="profile-stat">
+                            <span id="profileFavorites">0</span>
+                            <small>المفضلة</small>
+                        </div>
+                        <div class="profile-stat">
+                            <span id="profileWatched">0</span>
+                            <small>تم مشاهدتها</small>
+                        </div>
+                        <div class="profile-stat">
+                            <span id="profileWatchlist">0</span>
+                            <small>قائمة المشاهدة</small>
+                        </div>
+                    </div>
+                    <button class="submit-btn" id="profileLogoutBtn">
+                        <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                    </button>
+                </div>
+            </section>
+
+            <!-- Favorites Section -->
+            <section id="favorites-section" class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-heart"></i>قائمتي المفضلة</h2>
+                    <button class="clear-btn" id="clearFavorites">مسح الكل</button>
+                </div>
+                <div id="favoritesEmpty" class="empty-state">
+                    <i class="fas fa-heart-broken"></i>
+                    <h3>لم تقم بإضافة أي أنمي إلى المفضلة بعد</h3>
+                    <p>يمكنك إضافة الأنمي إلى المفضلة بالنقر على زر القلب في أي أنمي</p>
+                </div>
+                <div class="anime-grid" id="favoritesAnime"></div>
+            </section>
+
+            <!-- History Section -->
+            <section id="history-section" class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-history"></i>المشاهد مؤخراً</h2>
+                    <button class="clear-btn" id="clearHistory">مسح الكل</button>
+                </div>
+                <div id="historyEmpty" class="empty-state">
+                    <i class="fas fa-clock"></i>
+                    <h3>لم تشاهد أي أنمي بعد</h3>
+                    <p>ابدأ بمشاهدة بعض الأنمي وسيتم حفظها هنا تلقائياً</p>
+                </div>
+                <div class="anime-grid" id="historyAnime"></div>
+            </section>
+
+            <!-- Search Section -->
+            <section id="search-section" class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-search"></i>نتائج البحث</h2>
+                    <div class="search-info" id="searchInfo"></div>
+                </div>
+                <div class="anime-grid" id="searchResultsGrid"></div>
+            </section>
+
+            <!-- Anime Detail Section -->
+            <section id="anime-detail-section" class="content-section">
+                <!-- Anime details will be loaded here dynamically -->
+            </section>
+        </main>
+    </div>
+
+    <!-- Auth Modal -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">تسجيل الدخول إلى رياض أنمي</h3>
+                <button class="close-modal" id="closeModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="tabs">
+                    <button class="tab active" data-tab="login">تسجيل الدخول</button>
+                    <button class="tab" data-tab="register">إنشاء حساب</button>
+                </div>
+                <div class="tab-content active" id="loginContent">
+                    <div class="error-message" id="loginError"></div>
+                    <button class="google-login" id="googleLoginBtn">
+                        <i class="fab fa-google"></i> تسجيل الدخول باستخدام جوجل
+                    </button>
+                    <div class="divider">أو</div>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginEmail">
+                                <i class="fas fa-envelope"></i> البريد الإلكتروني
+                            </label>
+                            <input type="email" id="loginEmail" required placeholder="example@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">
+                                <i class="fas fa-lock"></i> كلمة المرور
+                            </label>
+                            <input type="password" id="loginPassword" required placeholder="••••••••">
+                            <button type="button" class="show-password" id="showLoginPassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="form-options">
+                            <label class="checkbox">
+                                <input type="checkbox" id="rememberMe">
+                                <span>تذكرني</span>
+                            </label>
+                            <a href="#" class="forgot-password">نسيت كلمة المرور؟</a>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+                        </button>
+                    </form>
+                </div>
+                <div class="tab-content" id="registerContent">
+                    <div class="error-message" id="registerError"></div>
+                    <button class="google-login" id="googleRegisterBtn">
+                        <i class="fab fa-google"></i> التسجيل باستخدام جوجل
+                    </button>
+                    <div class="divider">أو</div>
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label for="registerUsername">
+                                <i class="fas fa-user"></i> اسم المستخدم
+                            </label>
+                            <input type="text" id="registerUsername" required placeholder="اختر اسم مستخدم">
+                        </div>
+                        <div class="form-group">
+                            <label for="registerEmail">
+                                <i class="fas fa-envelope"></i> البريد الإلكتروني
+                            </label>
+                            <input type="email" id="registerEmail" required placeholder="example@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPassword">
+                                <i class="fas fa-lock"></i> كلمة المرور
+                            </label>
+                            <input type="password" id="registerPassword" required placeholder="••••••••">
+                            <button type="button" class="show-password" id="showRegisterPassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">
+                                <i class="fas fa-lock"></i> تأكيد كلمة المرور
+                            </label>
+                            <input type="password" id="confirmPassword" required placeholder="••••••••">
+                            <button type="button" class="show-password" id="showConfirmPassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="form-options">
+                            <label class="checkbox">
+                                <input type="checkbox" id="termsAgree" required>
+                                <span>أوافق على <a href="#">الشروط والأحكام</a></span>
+                            </label>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-user-plus"></i> إنشاء حساب
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Player -->
+    <div class="video-player-container" id="videoPlayer">
+        <div class="video-header">
+            <h2 id="playerTitle">مشاهدة الأنمي</h2>
+            <div class="player-actions">
+                <button class="player-btn" id="qualityBtn" title="جودة الفيديو">
+                    <i class="fas fa-cog"></i> جودة
+                </button>
+                <button class="player-btn" id="subtitleBtn" title="الترجمة">
+                    <i class="fas fa-closed-captioning"></i> ترجمة
+                </button>
+                <button class="player-btn" id="fullscreenBtn" title="ملء الشاشة">
+                    <i class="fas fa-expand"></i>
+                </button>
+                <button class="close-player" id="closePlayerBtn">&times;</button>
+            </div>
+        </div>
+        
+        <div class="video-wrapper">
+            <video id="animeVideo" class="video-js vjs-default-skin" controls preload="auto">
+                <p class="vjs-no-js">
+                    لمشاهدة هذا الفيديو، يرجى تمكين JavaScript، والنظر في الترقية إلى متصفح ويب يدعم
+                    <a href="https://videojs.com/html5-video-support/" target="_blank">HTML5 video</a>
+                </p>
+            </video>
+        </div>
+        
+        <div class="player-info">
+            <div class="episode-info">
+                <h3 id="episodeTitle">الحلقة 1</h3>
+                <div class="episode-meta">
+                    <span><i class="fas fa-clock"></i> <span id="episodeDuration">24:00</span></span>
+                    <span><i class="fas fa-calendar"></i> <span id="episodeDate">اليوم</span></span>
+                </div>
+            </div>
+            
+            <div class="episode-navigation">
+                <button class="nav-btn" id="prevEpisodeBtn">
+                    <i class="fas fa-backward"></i> السابقة
+                </button>
+                <div class="episode-selector">
+                    <h4>اختر الحلقة:</h4>
+                    <div class="episode-list" id="episodeList"></div>
+                </div>
+                <button class="nav-btn" id="nextEpisodeBtn">
+                    التالية <i class="fas fa-forward"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notificationText">تمت العملية بنجاح!</span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://vjs.zencdn.net/8.0.4/video.min.js"></script>
+    
+<!-- Firebase SDK -->
+<script type="module">
+    // تم التحديث ليعمل مع التواريخ الأحدث
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { 
+        getAuth, 
+        GoogleAuthProvider, 
+        signInWithPopup, 
+        createUserWithEmailAndPassword, 
+        signInWithEmailAndPassword,
+        signOut,
+        onAuthStateChanged,
+        updateProfile
+    } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { 
+        getFirestore, 
+        doc, 
+        setDoc, 
+        getDoc
+    } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    
+    const firebaseConfig = {
+        apiKey: "AIzaSyDLreGqwpOaF_djRj00ctMlee_7U6nYV-w",
+        authDomain: "riyad-73af5.firebaseapp.com",
+        projectId: "riyad-73af5",
+        storageBucket: "riyad-73af5.firebasestorage.app",
+        messagingSenderId: "376383403818",
+        appId: "1:376383403818:web:648547fc1527c7a857d053",
+        measurementId: "G-LGHBT03XMB"
+    };
+    
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const googleProvider = new GoogleAuthProvider();
+    
+    // Export Firebase functions globally
+    window.firebase = {
+        app,
+        auth,
+        db,
+        googleProvider,
+        // Auth methods
+        signInWithPopup: (auth, provider) => signInWithPopup(auth, provider),
+        createUserWithEmailAndPassword: (auth, email, password) => createUserWithEmailAndPassword(auth, email, password),
+        signInWithEmailAndPassword: (auth, email, password) => signInWithEmailAndPassword(auth, email, password),
+        signOut: (auth) => signOut(auth),
+        onAuthStateChanged: (auth, callback) => onAuthStateChanged(auth, callback),
+        updateProfile: (user, profile) => updateProfile(user, profile),
+        // Firestore methods
+        doc: (db, path, ...pathSegments) => doc(db, path, ...pathSegments),
+        setDoc: (docRef, data) => setDoc(docRef, data),
+        getDoc: (docRef) => getDoc(docRef)
+    };
+</script>
+
+    <!-- Main JavaScript -->
+    <script>
+        // رياض أنمي التطبيق - كامل وخالي من الأخطاء
+        class RiyadAnimeApp {
+            constructor() {
+                this.init();
+            }
+
+            async init() {
+                console.log('🚀 بدء تشغيل رياض أنمي...');
+                
+                this.state = {
+                    user: null,
+                    userData: null,
+                    favorites: [],
+                    watchHistory: [],
+                    watchList: [],
+                    currentAnime: null,
+                    currentEpisode: 1,
+                    currentSection: 'home',
+                    searchResults: [],
+                    animeCache: new Map(),
+                    seasonsCache: {},
+                    categories: [],
+                    isLoading: false,
+                    currentYear: new Date().getFullYear(),
+                    currentSeason: this.getCurrentSeason(),
+                    videoPlayer: null
+                };
+
+                try {
+                    this.setupEventListeners();
+                    this.setupAuthListener();
+                    await this.loadInitialData();
+                    this.updateUI();
+                    
+                    // إخفاء شاشة التحميل
+                    setTimeout(() => {
+                        const loadingScreen = document.getElementById('loadingScreen');
+                        if (loadingScreen) {
+                            loadingScreen.style.display = 'none';
+                        }
+                    }, 1000);
+                    
+                    console.log('✅ التطبيق جاهز للاستخدام!');
+                } catch (error) {
+                    console.error('❌ خطأ في تهيئة التطبيق:', error);
+                    this.showNotification('حدث خطأ في تحميل التطبيق', 'error');
+                }
+            }
+
+            setupEventListeners() {
+                console.log('🔧 جاري إعداد مستمعي الأحداث...');
+                
+                // أزرار المصادقة
+                document.getElementById('openLoginBtn').addEventListener('click', () => this.openAuthModal('login'));
+                document.getElementById('openRegisterBtn').addEventListener('click', () => this.openAuthModal('register'));
+                document.getElementById('closeModalBtn').addEventListener('click', () => this.closeAuthModal());
+                
+                // تسجيل الدخول بجوجل
+                document.getElementById('googleLoginBtn').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.signInWithGoogle();
+                });
+                
+                document.getElementById('googleRegisterBtn').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.signInWithGoogle();
+                });
+                
+                // نماذج المصادقة
+                document.getElementById('loginForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleLogin();
+                });
+                
+                document.getElementById('registerForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleRegister();
+                });
+                
+                // البحث
+                document.getElementById('searchBtn').addEventListener('click', () => this.searchAnime());
+                document.getElementById('searchBox').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        this.searchAnime();
+                    }
+                });
+                
+                // القائمة الجانبية
+                document.querySelectorAll('.sidebar-menu li').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const section = item.dataset.section;
+                        if (section) {
+                            this.switchSection(section);
+                        }
+                    });
+                });
+                
+                // القائمة المتنقلة
+                document.getElementById('mobileMenuToggle').addEventListener('click', () => this.toggleMobileMenu());
+                document.getElementById('sidebarClose').addEventListener('click', () => this.toggleMobileMenu());
+                
+                // مشغل الفيديو
+                document.getElementById('closePlayerBtn').addEventListener('click', () => this.closeVideoPlayer());
+                document.getElementById('prevEpisodeBtn').addEventListener('click', () => this.prevEpisode());
+                document.getElementById('nextEpisodeBtn').addEventListener('click', () => this.nextEpisode());
+                
+                // السمة
+                document.getElementById('themeSwitch').addEventListener('change', (e) => this.toggleTheme(e));
+                
+                // الملف الشخصي
+                document.getElementById('profileLogoutBtn')?.addEventListener('click', () => this.logout());
+                
+                // أزرار المسح
+                document.getElementById('clearFavorites')?.addEventListener('click', () => this.clearFavorites());
+                document.getElementById('clearHistory')?.addEventListener('click', () => this.clearHistory());
+                
+                // عرض الكل
+                document.querySelectorAll('.view-all').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const section = link.dataset.section;
+                        if (section) {
+                            this.switchSection(section);
+                        }
+                    });
+                });
+                
+                // أزرار إظهار كلمة المرور
+                document.querySelectorAll('.show-password').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const input = e.target.closest('button').previousElementSibling;
+                        this.togglePasswordVisibility(input);
+                    });
+                });
+                
+                // تبديل التبويبات
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        this.switchAuthTab(tab.dataset.tab);
+                    });
+                });
+                
+                // تصفية المواسم
+                document.querySelectorAll('.season-filter-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const season = btn.dataset.season;
+                        this.filterSeasons(season);
+                    });
+                });
+                
+                console.log('✅ تم إعداد جميع مستمعي الأحداث');
+            }
+
+            setupAuthListener() {
+                if (window.firebase && window.firebase.onAuthStateChanged) {
+                    window.firebase.onAuthStateChanged(window.firebase.auth, async (user) => {
+                        if (user) {
+                            console.log('👤 تم تسجيل دخول المستخدم:', user.email);
+                            this.state.user = user;
+                            await this.loadUserData();
+                            this.updateUI();
+                            this.showNotification(`مرحباً بعودتك ${this.state.userData?.username || user.email}!`, 'success');
+                        } else {
+                            console.log('👤 المستخدم غير مسجل');
+                            this.state.user = null;
+                            this.state.userData = null;
+                            this.state.favorites = [];
+                            this.state.watchHistory = [];
+                            this.state.watchList = [];
+                            this.updateUI();
+                        }
+                    });
+                }
+            }
+
+            async loadUserData() {
+                if (!this.state.user || !window.firebase) return;
+                
+                try {
+                    const userDoc = window.firebase.doc(window.firebase.db, 'users', this.state.user.uid);
+                    const docSnap = await window.firebase.getDoc(userDoc);
+                    
+                    if (docSnap.exists()) {
+                        this.state.userData = docSnap.data();
+                        this.state.favorites = this.state.userData.favorites || [];
+                        this.state.watchHistory = this.state.userData.watchHistory || [];
+                        this.state.watchList = this.state.userData.watchList || [];
+                    } else {
+                        // إنشاء بيانات مستخدم جديدة
+                        const userData = {
+                            username: this.state.user.displayName || this.state.user.email.split('@')[0],
+                            email: this.state.user.email,
+                            createdAt: new Date().toISOString(),
+                            favorites: [],
+                            watchHistory: [],
+                            watchList: [],
+                            profileImage: ''
+                        };
+                        
+                        await window.firebase.setDoc(userDoc, userData);
+                        this.state.userData = userData;
+                    }
+                    
+                    this.updateProfileInfo();
+                } catch (error) {
+                    console.error('❌ خطأ في تحميل بيانات المستخدم:', error);
+                }
+            }
+
+            async saveUserData() {
+                if (!this.state.user || !this.state.userData || !window.firebase) return;
+                
+                try {
+                    const userDoc = window.firebase.doc(window.firebase.db, 'users', this.state.user.uid);
+                    await window.firebase.setDoc(userDoc, {
+                        ...this.state.userData,
+                        favorites: this.state.favorites,
+                        watchHistory: this.state.watchHistory,
+                        watchList: this.state.watchList,
+                        lastUpdated: new Date().toISOString()
+                    }, { merge: true });
+                } catch (error) {
+                    console.error('❌ خطأ في حفظ بيانات المستخدم:', error);
+                }
+            }
+
+            // نظام المصادقة
+            async signInWithGoogle() {
+                try {
+                    if (!window.firebase || !window.firebase.signInWithPopup) {
+                        throw new Error('Firebase غير مهيئ');
+                    }
+                    
+                    const result = await window.firebase.signInWithPopup(
+                        window.firebase.auth,
+                        window.firebase.googleProvider
+                    );
+                    
+                    this.closeAuthModal();
+                    this.showNotification('تم تسجيل الدخول بنجاح!', 'success');
+                } catch (error) {
+                    console.error('❌ خطأ في تسجيل الدخول بجوجل:', error);
+                    this.showNotification('فشل تسجيل الدخول بجوجل', 'error');
+                    this.showError('loginError', 'فشل تسجيل الدخول بجوجل. حاول مرة أخرى.');
+                }
+            }
+
+            async handleLogin() {
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                if (!email || !password) {
+                    this.showError('loginError', 'يرجى إدخال البريد الإلكتروني وكلمة المرور');
+                    return;
+                }
+                
+                try {
+                    if (!window.firebase || !window.firebase.signInWithEmailAndPassword) {
+                        throw new Error('Firebase غير مهيئ');
+                    }
+                    
+                    await window.firebase.signInWithEmailAndPassword(
+                        window.firebase.auth,
+                        email,
+                        password
+                    );
+                    
+                    this.closeAuthModal();
+                    this.showNotification('تم تسجيل الدخول بنجاح!', 'success');
+                } catch (error) {
+                    console.error('❌ خطأ في تسجيل الدخول:', error);
+                    
+                    let message = 'فشل تسجيل الدخول';
+                    if (error.code === 'auth/user-not-found') {
+                        message = 'البريد الإلكتروني غير مسجل';
+                    } else if (error.code === 'auth/wrong-password') {
+                        message = 'كلمة المرور غير صحيحة';
+                    } else if (error.code === 'auth/invalid-email') {
+                        message = 'البريد الإلكتروني غير صالح';
+                    } else if (error.code === 'auth/too-many-requests') {
+                        message = 'تم تجاوز عدد المحاولات، حاول مرة أخرى لاحقاً';
+                    } else if (error.code === 'auth/user-disabled') {
+                        message = 'هذا الحساب تم تعطيله';
+                    } else if (error.code === 'auth/network-request-failed') {
+                        message = 'خطأ في الاتصال بالشبكة';
+                    }
+                    
+                    this.showError('loginError', message);
+                }
+            }
+
+            async handleRegister() {
+                const username = document.getElementById('registerUsername').value;
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                if (!username || !email || !password || !confirmPassword) {
+                    this.showError('registerError', 'يرجى ملء جميع الحقول');
+                    return;
+                }
+                
+                if (password !== confirmPassword) {
+                    this.showError('registerError', 'كلمات المرور غير متطابقة');
+                    return;
+                }
+                
+                if (password.length < 6) {
+                    this.showError('registerError', 'كلمة المرور يجب أن تكون 6 أحرف على الأقل');
+                    return;
+                }
+                
+                if (!document.getElementById('termsAgree').checked) {
+                    this.showError('registerError', 'يجب الموافقة على الشروط والأحكام');
+                    return;
+                }
+                
+                try {
+                    if (!window.firebase || !window.firebase.createUserWithEmailAndPassword) {
+                        throw new Error('Firebase غير مهيئ');
+                    }
+                    
+                    const userCredential = await window.firebase.createUserWithEmailAndPassword(
+                        window.firebase.auth,
+                        email,
+                        password
+                    );
+                    
+                    // تحديث اسم المستخدم
+                    if (window.firebase.updateProfile) {
+                        await window.firebase.updateProfile(userCredential.user, {
+                            displayName: username
+                        });
+                    }
+                    
+                    this.closeAuthModal();
+                    this.showNotification('تم إنشاء الحساب بنجاح!', 'success');
+                    
+                } catch (error) {
+                    console.error('❌ خطأ في التسجيل:', error);
+                    
+                    let message = 'فشل إنشاء الحساب';
+                    if (error.code === 'auth/email-already-in-use') {
+                        message = 'البريد الإلكتروني مستخدم بالفعل';
+                    } else if (error.code === 'auth/invalid-email') {
+                        message = 'البريد الإلكتروني غير صالح';
+                    } else if (error.code === 'auth/weak-password') {
+                        message = 'كلمة المرور ضعيفة جداً';
+                    } else if (error.code === 'auth/operation-not-allowed') {
+                        message = 'عملية التسجيل غير مسموحة حالياً';
+                    } else if (error.code === 'auth/network-request-failed') {
+                        message = 'خطأ في الاتصال بالشبكة';
+                    }
+                    
+                    this.showError('registerError', message);
+                }
+            }
+
+            async logout() {
+                try {
+                    if (!window.firebase || !window.firebase.signOut) {
+                        throw new Error('Firebase غير مهيئ');
+                    }
+                    
+                    await window.firebase.signOut(window.firebase.auth);
+                    this.showNotification('تم تسجيل الخروج بنجاح', 'info');
+                } catch (error) {
+                    console.error('❌ خطأ في تسجيل الخروج:', error);
+                    this.showNotification('فشل تسجيل الخروج', 'error');
+                }
+            }
+
+            // واجهة المستخدم
+            updateUI() {
+                const loginBtn = document.getElementById('openLoginBtn');
+                const registerBtn = document.getElementById('openRegisterBtn');
+                
+                if (this.state.user) {
+                    // المستخدم مسجل
+                    loginBtn.innerHTML = `<i class="fas fa-user"></i> ${this.state.userData?.username || 'حسابي'}`;
+                    loginBtn.onclick = () => this.switchSection('profile');
+                    
+                    registerBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> تسجيل الخروج';
+                    registerBtn.onclick = () => this.logout();
+                } else {
+                    // المستخدم غير مسجل
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> تسجيل الدخول';
+                    loginBtn.onclick = () => this.openAuthModal('login');
+                    
+                    registerBtn.innerHTML = '<i class="fas fa-user-plus"></i> إنشاء حساب';
+                    registerBtn.onclick = () => this.openAuthModal('register');
+                }
+                
+                // تحديث العداد
+                this.updateCounts();
+                this.updateProfileInfo();
+            }
+
+            updateCounts() {
+                document.getElementById('favoritesCount').textContent = this.state.favorites.length;
+                document.getElementById('watchlistCount').textContent = this.state.watchList.length;
+                document.getElementById('historyCount').textContent = this.state.watchHistory.length;
+            }
+
+            updateProfileInfo() {
+                const profileUsername = document.getElementById('profileUsername');
+                const profileEmail = document.getElementById('profileEmail');
+                const profileFavorites = document.getElementById('profileFavorites');
+                const profileWatched = document.getElementById('profileWatched');
+                const profileWatchlist = document.getElementById('profileWatchlist');
+                
+                if (this.state.user && this.state.userData) {
+                    profileUsername.textContent = this.state.userData.username;
+                    profileEmail.textContent = this.state.userData.email;
+                    profileFavorites.textContent = this.state.favorites.length;
+                    profileWatched.textContent = this.state.watchHistory.length;
+                    profileWatchlist.textContent = this.state.watchList.length;
+                } else {
+                    profileUsername.textContent = 'مرحباً!';
+                    profileEmail.textContent = 'سجل الدخول لعرض معلومات حسابك';
+                    profileFavorites.textContent = '0';
+                    profileWatched.textContent = '0';
+                    profileWatchlist.textContent = '0';
+                }
+            }
+
+            // التبديل بين الأقسام
+            switchSection(sectionId) {
+                // تحديث القائمة الجانبية
+                document.querySelectorAll('.sidebar-menu li').forEach(item => {
+                    item.classList.remove('active');
+                    if (item.dataset.section === sectionId) {
+                        item.classList.add('active');
+                    }
+                });
+                
+                // إخفاء جميع الأقسام
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // عرض القسم المطلوب
+                const targetSection = document.getElementById(`${sectionId}-section`);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                    this.state.currentSection = sectionId;
+                    
+                    // تحميل محتوى القسم إذا لزم الأمر
+                    switch(sectionId) {
+                        case 'seasons':
+                            this.loadSeasons();
+                            break;
+                        case 'favorites':
+                            this.loadFavorites();
+                            break;
+                        case 'history':
+                            this.loadHistory();
+                            break;
+                        case 'profile':
+                            this.updateProfileInfo();
+                            break;
+                        case 'latest':
+                            this.loadMoreAnime('latest');
+                            break;
+                        case 'popular':
+                            this.loadMoreAnime('popular');
+                            break;
+                        case 'trending':
+                            this.loadMoreAnime('trending');
+                            break;
+                    }
+                }
+                
+                // إغلاق القائمة الجانبية على الهاتف
+                document.querySelector('.sidebar').classList.remove('active');
+            }
+
+            openAuthModal(tab = 'login') {
+                document.getElementById('authModal').style.display = 'flex';
+                this.switchAuthTab(tab);
+                document.getElementById('modalTitle').textContent = 
+                    tab === 'login' ? 'تسجيل الدخول إلى رياض أنمي' : 'إنشاء حساب في رياض أنمي';
+                
+                // مسح رسائل الخطأ
+                this.clearErrors();
+            }
+
+            closeAuthModal() {
+                document.getElementById('authModal').style.display = 'none';
+                document.getElementById('loginForm').reset();
+                document.getElementById('registerForm').reset();
+                this.clearErrors();
+            }
+
+            switchAuthTab(tabId) {
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.classList.toggle('active', tab.dataset.tab === tabId);
+                });
+                
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.toggle('active', content.id === `${tabId}Content`);
+                });
+            }
+
+            toggleMobileMenu() {
+                document.querySelector('.sidebar').classList.toggle('active');
+            }
+
+            toggleTheme(e) {
+                if (e.target.checked) {
+                    document.body.classList.add('dark-theme');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.body.classList.remove('dark-theme');
+                    localStorage.setItem('theme', 'light');
+                }
+            }
+
+            togglePasswordVisibility(input) {
+                if (input.type === 'password') {
+                    input.type = 'text';
+                } else {
+                    input.type = 'password';
+                }
+            }
+
+            clearErrors() {
+                document.querySelectorAll('.error-message').forEach(error => {
+                    error.style.display = 'none';
+                });
+            }
+
+            showError(elementId, message) {
+                const errorElement = document.getElementById(elementId);
+                if (errorElement) {
+                    errorElement.textContent = message;
+                    errorElement.style.display = 'block';
+                }
+            }
+
+            // تحميل البيانات الأولية
+            async loadInitialData() {
+                console.log('📥 جاري تحميل البيانات الأولية...');
+                
+                await this.loadCategories();
+                await this.loadLatestAnime();
+                await this.loadPopularAnime();
+                await this.loadTrendingAnime();
+                
+                console.log('✅ تم تحميل البيانات الأولية');
+            }
+
+            async loadCategories() {
+                const categories = [
+                    { id: 1, name: 'أكشن', icon: 'fas fa-fist-raised', description: 'أنمي مليء بالمشاهد الحركية' },
+                    { id: 2, name: 'مغامرة', icon: 'fas fa-hiking', description: 'رحلات واستكشاف عوالم جديدة' },
+                    { id: 3, name: 'كوميديا', icon: 'fas fa-laugh', description: 'مواقف مضحكة ومسلية' },
+                    { id: 4, name: 'دراما', icon: 'fas fa-theater-masks', description: 'قصص مؤثرة وعاطفية' },
+                    { id: 5, name: 'فانتازيا', icon: 'fas fa-dragon', description: 'عوالم سحرية وخرافية' },
+                    { id: 6, name: 'رومانسية', icon: 'fas fa-heart', description: 'قصص حب وعلاقات' },
+                    { id: 7, name: 'خيال علمي', icon: 'fas fa-robot', description: 'تكنولوجيا ومستقبل متقدم' },
+                    { id: 8, name: 'رياضة', icon: 'fas fa-running', description: 'منافسات رياضية مثيرة' },
+                    { id: 9, name: 'غموض', icon: 'fas fa-search', description: 'ألغاز وتحقيقات' },
+                    { id: 10, name: 'نفسي', icon: 'fas fa-brain', description: 'صراعات نفسية عميقة' },
+                    { id: 11, name: 'أوفا', icon: 'fas fa-star', description: 'حلقات خاصة' },
+                    { id: 12, name: 'أونا', icon: 'fas fa-desktop', description: 'أنمي أصلي للإنترنت' }
+                ];
+
+                this.state.categories = categories;
+                const container = document.getElementById('categoriesGrid');
+                if (container) {
+                    container.innerHTML = categories.map(category => `
+                        <div class="category-card" data-category="${category.name}" onclick="app.searchByCategory('${category.name}')">
+                            <i class="${category.icon}"></i>
+                            <h4>${category.name}</h4>
+                            <p>${category.description}</p>
+                        </div>
+                    `).join('');
+                }
+            }
+
+            // تحميل الأنمي من Jikan API
+            async loadLatestAnime() {
+                try {
+                    const response = await fetch('https://api.jikan.moe/v4/seasons/now?limit=12');
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    const data = await response.json();
+                    
+                    this.state.animeCache.set('latest', data.data);
+                    this.renderAnimeGrid(data.data, 'latestAnime');
+                    document.getElementById('latestLoading').style.display = 'none';
+                    document.getElementById('latestCount').textContent = data.data.length;
+                } catch (error) {
+                    console.error('❌ خطأ في تحميل أحدث الأنمي:', error);
+                    this.showNotification('خطأ في تحميل أحدث الأنمي', 'error');
+                    this.loadFallbackAnime('latestAnime');
+                }
+            }
+
+            async loadPopularAnime() {
+                try {
+                    const response = await fetch('https://api.jikan.moe/v4/top/anime?filter=bypopularity&limit=12');
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    const data = await response.json();
+                    
+                    this.state.animeCache.set('popular', data.data);
+                    this.renderAnimeGrid(data.data, 'popularAnime');
+                    document.getElementById('popularLoading').style.display = 'none';
+                    document.getElementById('popularCount').textContent = data.data.length;
+                } catch (error) {
+                    console.error('❌ خطأ في تحميل الأنمي الشائعة:', error);
+                    this.showNotification('خطأ في تحميل الأنمي الشائعة', 'error');
+                    this.loadFallbackAnime('popularAnime');
+                }
+            }
+
+            async loadTrendingAnime() {
+                try {
+                    const response = await fetch('https://api.jikan.moe/v4/top/anime?limit=12');
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    const data = await response.json();
+                    
+                    this.state.animeCache.set('trending', data.data);
+                    this.renderAnimeGrid(data.data, 'trendingAnime');
+                    document.getElementById('trendingLoading').style.display = 'none';
+                    document.getElementById('trendingCount').textContent = data.data.length;
+                } catch (error) {
+                    console.error('❌ خطأ في تحميل الأنمي الأكثر انتشاراً:', error);
+                    this.showNotification('خطأ في تحميل الأنمي الأكثر انتشاراً', 'error');
+                    this.loadFallbackAnime('trendingAnime');
+                }
+            }
+
+            async loadMoreAnime(type) {
+                const container = document.getElementById(`${type}Anime`);
+                const animeList = this.state.animeCache.get(type) || [];
+                
+                if (animeList.length > 0) {
+                    this.renderAnimeGrid(animeList, `${type}Anime`);
+                } else {
+                    await this[`load${type.charAt(0).toUpperCase() + type.slice(1)}Anime`]();
+                }
+            }
+
+            loadFallbackAnime(containerId) {
+                const fallbackAnime = [
+                    {
+                        mal_id: 1,
+                        title: 'ناروتو شيبودن',
+                        title_arabic: 'ناروتو شيبودن',
+                        images: { jpg: { large_image_url: 'https://images.unsplash.com/photo-1541562232579-512a21360020?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80' } },
+                        score: 8.5,
+                        episodes: 500,
+                        type: 'TV',
+                        genres: [{ name: 'أكشن' }, { name: 'مغامرة' }]
+                    },
+                    {
+                        mal_id: 2,
+                        title: 'هجوم العمالقة',
+                        title_arabic: 'هجوم العمالقة',
+                        images: { jpg: { large_image_url: 'https://images.unsplash.com/photo-1542204165-65bf26472b9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80' } },
+                        score: 9.0,
+                        episodes: 75,
+                        type: 'TV',
+                        genres: [{ name: 'أكشن' }, { name: 'دراما' }]
+                    }
+                ];
+                
+                this.renderAnimeGrid(fallbackAnime, containerId);
+                document.getElementById(containerId.replace('Anime', 'Loading')).style.display = 'none';
+            }
+
+            async loadSeasons() {
+                try {
+                    const seasonsContainer = document.getElementById('seasonsContainer');
+                    const seasonsLoading = document.getElementById('seasonsLoading');
+                    
+                    if (seasonsLoading) seasonsLoading.style.display = 'none';
+                    
+                    // المواسم السابقة والحالية والقادمة
+                    const currentYear = this.state.currentYear;
+                    const seasons = ['winter', 'spring', 'summer', 'fall'];
+                    
+                    let seasonsHTML = '';
+                    let seasonCount = 0;
+                    
+                    // السنة الحالية
+                    const currentSeasonIndex = seasons.indexOf(this.state.currentSeason);
+                    
+                    // عرض المواسم من 2020 إلى السنة الحالية + 1
+                    for (let year = 2020; year <= currentYear + 1; year++) {
+                        for (let i = 0; i < seasons.length; i++) {
+                            const season = seasons[i];
+                            
+                            // تحديد نوع الموسم
+                            let seasonType = 'previous';
+                            if (year === currentYear) {
+                                if (i < currentSeasonIndex) seasonType = 'previous';
+                                else if (i === currentSeasonIndex) seasonType = 'current';
+                                else seasonType = 'upcoming';
+                            } else if (year > currentYear) {
+                                seasonType = 'upcoming';
+                            }
+                            
+                            const seasonArabic = this.getSeasonArabic(season);
+                            const seasonTypeArabic = this.getSeasonTypeArabic(seasonType);
+                            
+                            seasonsHTML += `
+                                <div class="season-card" data-year="${year}" data-season="${season}" onclick="app.loadSeasonAnime(${year}, '${season}')">
+                                    <span class="season-tag">${seasonTypeArabic}</span>
+                                    <h3>${seasonArabic} ${year}</h3>
+                                    <div class="season-anime-count">
+                                        <i class="fas fa-film"></i>
+                                        <span>أنمي ${seasonArabic}</span>
+                                    </div>
+                                </div>
+                            `;
+                            seasonCount++;
+                        }
+                    }
+                    
+                    seasonsContainer.innerHTML = seasonsHTML;
+                    document.getElementById('seasonsCount').textContent = seasonCount;
+                    
+                } catch (error) {
+                    console.error('❌ خطأ في تحميل المواسم:', error);
+                    this.showError('seasonsError', 'خطأ في تحميل المواسم');
+                }
+            }
+
+            getCurrentSeason() {
+                const month = new Date().getMonth() + 1;
+                if (month >= 12 || month <= 2) return 'winter';
+                if (month >= 3 && month <= 5) return 'spring';
+                if (month >= 6 && month <= 8) return 'summer';
+                return 'fall';
+            }
+
+            getSeasonArabic(season) {
+                const seasonsMap = {
+                    'winter': 'شتاء',
+                    'spring': 'ربيع',
+                    'summer': 'صيف',
+                    'fall': 'خريف'
+                };
+                return seasonsMap[season] || season;
+            }
+
+            getSeasonTypeArabic(type) {
+                const typesMap = {
+                    'previous': 'سابق',
+                    'current': 'حالي',
+                    'upcoming': 'قادم'
+                };
+                return typesMap[type] || type;
+            }
+
+            async loadSeasonAnime(year, season) {
+                try {
+                    const response = await fetch(`https://api.jikan.moe/v4/seasons/${year}/${season}`);
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    const data = await response.json();
+                    
+                    this.state.searchResults = data.data || [];
+                    this.renderSearchResults();
+                    this.switchSection('search');
+                    
+                    const seasonArabic = this.getSeasonArabic(season);
+                    this.showNotification(`عرض أنمي ${seasonArabic} ${year} (${data.data.length} أنمي)`, 'info');
+                } catch (error) {
+                    console.error('❌ خطأ في تحميل أنمي الموسم:', error);
+                    this.showNotification('خطأ في تحميل أنمي الموسم', 'error');
+                }
+            }
+
+            filterSeasons(season) {
+                document.querySelectorAll('.season-filter-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.season === season);
+                });
+                
+                // هنا يمكنك إضافة تصفية إضافية إذا أردت
+            }
+
+            // عرض شبكة الأنمي
+            renderAnimeGrid(animeList, containerId) {
+                const container = document.getElementById(containerId);
+                if (!container || !animeList) return;
+
+                container.innerHTML = animeList.map(anime => {
+                    const isFavorite = this.state.favorites.includes(anime.mal_id);
+                    const isInWatchlist = this.state.watchList.includes(anime.mal_id);
+                    
+                    return `
+                        <div class="anime-card" data-id="${anime.mal_id}">
+                            <div class="anime-badge">${anime.type || 'TV'}</div>
+                            <div class="anime-actions">
+                                <button class="action-btn favorite-btn ${isFavorite ? 'active' : ''}" 
+                                        data-id="${anime.mal_id}" title="إضافة إلى المفضلة">
+                                    <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
+                                </button>
+                                <button class="action-btn watchlist-btn ${isInWatchlist ? 'active' : ''}" 
+                                        data-id="${anime.mal_id}" title="إضافة إلى قائمة المشاهدة">
+                                    <i class="fas fa-bookmark"></i>
+                                </button>
+                            </div>
+                            <img src="${anime.images?.jpg?.large_image_url || 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'}" 
+                                 alt="${anime.title}" class="anime-image" onerror="this.src='https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'">
+                            <div class="anime-info">
+                                <h3 class="anime-title">${anime.title_arabic || anime.title}</h3>
+                                <div class="anime-meta">
+                                    <span class="rating">
+                                        <i class="fas fa-star"></i> ${anime.score || 'N/A'}
+                                    </span>
+                                    <span>${anime.episodes || '?'} حلقة</span>
+                                </div>
+                                <div class="anime-genres">
+                                    ${(anime.genres?.slice(0, 2) || []).map(genre => 
+                                        `<span class="genre-tag">${genre.name}</span>`
+                                    ).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                // إضافة مستمعي الأحداث
+                container.querySelectorAll('.anime-card').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        if (!e.target.closest('.action-btn')) {
+                            const animeId = parseInt(card.dataset.id);
+                            this.openAnimeDetails(animeId);
+                        }
+                    });
+                });
+
+                container.querySelectorAll('.favorite-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const animeId = parseInt(btn.dataset.id);
+                        this.toggleFavorite(animeId);
+                    });
+                });
+
+                container.querySelectorAll('.watchlist-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const animeId = parseInt(btn.dataset.id);
+                        this.toggleWatchlist(animeId);
+                    });
+                });
+            }
+
+            // تفاصيل الأنمي
+            async openAnimeDetails(animeId) {
+                try {
+                    const response = await fetch(`https://api.jikan.moe/v4/anime/${animeId}/full`);
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    const data = await response.json();
+                    const anime = data.data;
+                    
+                    // تحميل الحلقات
+                    let episodes = [];
+                    try {
+                        const episodesResponse = await fetch(`https://api.jikan.moe/v4/anime/${animeId}/episodes`);
+                        if (episodesResponse.ok) {
+                            const episodesData = await episodesResponse.json();
+                            episodes = episodesData.data || [];
+                        }
+                    } catch (error) {
+                        console.error('❌ خطأ في تحميل الحلقات:', error);
+                    }
+                    
+                    const isFavorite = this.state.favorites.includes(animeId);
+                    
+                    // إنشاء عداد للحلقة القادمة (مثال)
+                    const nextEpisodeCountdown = this.createNextEpisodeCountdown(anime);
+                    
+                    // بناء واجهة التفاصيل
+                    const detailSection = document.getElementById('anime-detail-section');
+                    detailSection.innerHTML = `
+                        <div class="anime-detail-header">
+                            <button class="back-btn" onclick="app.switchSection('${this.state.currentSection}')">
+                                <i class="fas fa-arrow-right"></i> العودة
+                            </button>
+                            <h2 class="anime-detail-title">${anime.title_arabic || anime.title}</h2>
+                        </div>
+                        
+                        <div class="anime-detail-content">
+                            <div class="anime-poster">
+                                <img src="${anime.images?.jpg?.large_image_url || 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'}" 
+                                     alt="${anime.title}" onerror="this.src='https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'">
+                                <div class="anime-actions-detail">
+                                    <button class="action-btn-detail watch-btn" onclick="app.watchAnime(${animeId}, 1)">
+                                        <i class="fas fa-play"></i> مشاهدة الحلقة 1
+                                    </button>
+                                    <button class="action-btn-detail favorite-btn-detail ${isFavorite ? 'active' : ''}" 
+                                            onclick="app.toggleFavorite(${animeId})">
+                                        <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
+                                        ${isFavorite ? 'إزالة من المفضلة' : 'إضافة إلى المفضلة'}
+                                    </button>
+                                </div>
+                                ${nextEpisodeCountdown}
+                            </div>
+                            
+                            <div class="anime-info-detail">
+                                <div class="anime-meta-detail">
+                                    <span class="rating-detail">
+                                        <i class="fas fa-star"></i> ${anime.score || 'N/A'}
+                                    </span>
+                                    <span><i class="fas fa-play-circle"></i> ${anime.episodes || '?'} حلقة</span>
+                                    <span><i class="fas fa-clock"></i> ${anime.duration || 'غير معروف'}</span>
+                                    <span><i class="fas fa-calendar"></i> ${anime.year || 'غير معروف'}</span>
+                                </div>
+                                
+                                <div class="anime-synopsis">
+                                    <h3>القصة</h3>
+                                    <p>${anime.synopsis_arabic || anime.synopsis || 'لا يوجد وصف متوفر'}</p>
+                                </div>
+                                
+                                <div class="anime-genres-detail">
+                                    ${(anime.genres || []).map(genre => `
+                                        <span class="genre-tag-detail">${genre.name}</span>
+                                    `).join('')}
+                                </div>
+                                
+                                <div class="anime-episodes">
+                                    <h3>الحلقات <span>(${episodes.length})</span></h3>
+                                    <div class="episodes-grid">
+                                        ${episodes.slice(0, 24).map(episode => `
+                                            <div class="episode-card" onclick="app.watchAnime(${animeId}, ${episode.mal_id})">
+                                                <span class="episode-number">الحلقة ${episode.mal_id}</span>
+                                                <span class="episode-title">${episode.title_arabic || episode.title || 'بدون عنوان'}</span>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    this.state.currentAnime = anime;
+                    this.switchSection('anime-detail');
+                    
+                } catch (error) {
+                    console.error('❌ خطأ في تحميل تفاصيل الأنمي:', error);
+                    this.showNotification('خطأ في تحميل تفاصيل الأنمي', 'error');
+                }
+            }
+
+            createNextEpisodeCountdown(anime) {
+                // هذا مثال لعداد الحلقة القادمة
+                // في التطبيق الحقيقي، ستحتاج إلى بيانات دقيقة عن مواعيد نزول الحلقات
+                const nextEpisodeDate = new Date();
+                nextEpisodeDate.setDate(nextEpisodeDate.getDate() + 7); // مثال: الحلقة القادمة بعد أسبوع
+                
+                return `
+                    <div class="countdown-timer">
+                        <h4>موعد الحلقة القادمة</h4>
+                        <div class="countdown" id="episodeCountdown">
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="countdownDays">07</span>
+                                <span class="countdown-label">أيام</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="countdownHours">12</span>
+                                <span class="countdown-label">ساعات</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="countdownMinutes">45</span>
+                                <span class="countdown-label">دقائق</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // مشاهدة الأنمي
+            watchAnime(animeId, episodeNumber = 1) {
+                if (!this.state.user) {
+                    this.showNotification('يجب تسجيل الدخول لمشاهدة الأنمي', 'error');
+                    this.openAuthModal('login');
+                    return;
+                }
+                
+                // إضافة إلى سجل المشاهدة
+                this.addToWatchHistory(animeId, episodeNumber);
+                
+                // هنا يمكنك إضافة روابط حقيقية للأنمي
+                // هذا رابط فيديو تجريبي من موقع غوغل
+                const videoUrl = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+                
+                this.openVideoPlayer(videoUrl, animeId, episodeNumber);
+            }
+
+            openVideoPlayer(videoUrl, animeId, episodeNumber) {
+                // تهيئة مشغل الفيديو إذا لم يكن معيناً
+                if (!this.state.videoPlayer) {
+                    this.state.videoPlayer = videojs('animeVideo', {
+                        controls: true,
+                        autoplay: false,
+                        preload: 'auto',
+                        responsive: true,
+                        fluid: true,
+                        playbackRates: [0.5, 1, 1.5, 2],
+                        language: 'ar'
+                    });
+                }
+                
+                this.state.videoPlayer.src({
+                    src: videoUrl,
+                    type: 'video/mp4'
+                });
+                
+                document.getElementById('playerTitle').textContent = this.state.currentAnime?.title || 'مشاهدة الأنمي';
+                document.getElementById('episodeTitle').textContent = `الحلقة ${episodeNumber}`;
+                
+                // توليد قائمة الحلقات
+                this.generateEpisodeList(animeId, episodeNumber);
+                
+                // عرض مشغل الفيديو
+                document.getElementById('videoPlayer').style.display = 'block';
+                
+                // تشغيل الفيديو
+                setTimeout(() => {
+                    this.state.videoPlayer.play();
+                }, 500);
+            }
+
+            generateEpisodeList(animeId, currentEpisode) {
+                const container = document.getElementById('episodeList');
+                const totalEpisodes = this.state.currentAnime?.episodes || 24;
+                
+                container.innerHTML = '';
+                
+                // إنشاء أزرار للحلقات من 1 إلى 50 أو عدد الحلقات الكلي
+                const episodeCount = Math.min(totalEpisodes, 50);
+                for (let i = 1; i <= episodeCount; i++) {
+                    const btn = document.createElement('button');
+                    btn.className = `episode-btn ${i === currentEpisode ? 'active' : ''}`;
+                    btn.textContent = i;
+                    btn.onclick = () => this.switchEpisode(animeId, i);
+                    container.appendChild(btn);
+                }
+            }
+
+            switchEpisode(animeId, episodeNumber) {
+                this.watchAnime(animeId, episodeNumber);
+            }
+
+            prevEpisode() {
+                if (this.state.currentAnime?.currentEpisode > 1) {
+                    const prevEpisode = this.state.currentAnime.currentEpisode - 1;
+                    this.switchEpisode(this.state.currentAnime.id, prevEpisode);
+                }
+            }
+
+            nextEpisode() {
+                const totalEpisodes = this.state.currentAnime?.episodes || 24;
+                if (this.state.currentAnime?.currentEpisode < totalEpisodes) {
+                    const nextEpisode = this.state.currentAnime.currentEpisode + 1;
+                    this.switchEpisode(this.state.currentAnime.id, nextEpisode);
+                }
+            }
+
+            closeVideoPlayer() {
+                if (this.state.videoPlayer) {
+                    this.state.videoPlayer.pause();
+                }
+                document.getElementById('videoPlayer').style.display = 'none';
+            }
+
+            // المفضلة وقائمة المشاهدة
+            async toggleFavorite(animeId) {
+                if (!this.state.user) {
+                    this.showNotification('يجب تسجيل الدخول لإضافة إلى المفضلة', 'error');
+                    this.openAuthModal('login');
+                    return;
+                }
+                
+                const index = this.state.favorites.indexOf(animeId);
+                
+                if (index === -1) {
+                    this.state.favorites.push(animeId);
+                    this.showNotification('تمت الإضافة إلى المفضلة', 'success');
+                } else {
+                    this.state.favorites.splice(index, 1);
+                    this.showNotification('تمت الإزالة من المفضلة', 'info');
+                }
+                
+                await this.saveUserData();
+                this.updateUI();
+                
+                // تحديث الأزرار
+                document.querySelectorAll(`.favorite-btn[data-id="${animeId}"]`).forEach(btn => {
+                    const isFavorite = this.state.favorites.includes(animeId);
+                    btn.classList.toggle('active', isFavorite);
+                    btn.querySelector('i').className = isFavorite ? 'fas fa-heart' : 'far fa-heart';
+                });
+            }
+
+            async toggleWatchlist(animeId) {
+                if (!this.state.user) {
+                    this.showNotification('يجب تسجيل الدخول لإضافة إلى قائمة المشاهدة', 'error');
+                    this.openAuthModal('login');
+                    return;
+                }
+                
+                const index = this.state.watchList.indexOf(animeId);
+                
+                if (index === -1) {
+                    this.state.watchList.push(animeId);
+                    this.showNotification('تمت الإضافة إلى قائمة المشاهدة', 'success');
+                } else {
+                    this.state.watchList.splice(index, 1);
+                    this.showNotification('تمت الإزالة من قائمة المشاهدة', 'info');
+                }
+                
+                await this.saveUserData();
+                this.updateUI();
+                
+                // تحديث الأزرار
+                document.querySelectorAll(`.watchlist-btn[data-id="${animeId}"]`).forEach(btn => {
+                    btn.classList.toggle('active', this.state.watchList.includes(animeId));
+                });
+            }
+
+            async addToWatchHistory(animeId, episodeNumber) {
+                if (!this.state.user) return;
+                
+                const watchEntry = {
+                    animeId,
+                    episodeNumber,
+                    timestamp: new Date().toISOString(),
+                    title: this.state.currentAnime?.title || `أنمي ${animeId}`
+                };
+                
+                // إضافة إلى بداية المصفوفة
+                this.state.watchHistory.unshift(watchEntry);
+                
+                // حفظ آخر 50 مشاهدة فقط
+                this.state.watchHistory = this.state.watchHistory.slice(0, 50);
+                
+                await this.saveUserData();
+            }
+
+            async clearFavorites() {
+                if (!this.state.user) return;
+                
+                if (confirm('هل أنت متأكد من مسح جميع المفضلة؟')) {
+                    this.state.favorites = [];
+                    await this.saveUserData();
+                    this.updateUI();
+                    this.showNotification('تم مسح المفضلة', 'info');
+                    
+                    // تحديث عرض المفضلة إذا كان مفتوحاً
+                    if (this.state.currentSection === 'favorites') {
+                        this.loadFavorites();
+                    }
+                }
+            }
+
+            async clearHistory() {
+                if (!this.state.user) return;
+                
+                if (confirm('هل أنت متأكد من مسح سجل المشاهدة؟')) {
+                    this.state.watchHistory = [];
+                    await this.saveUserData();
+                    this.updateUI();
+                    this.showNotification('تم مسح سجل المشاهدة', 'info');
+                    
+                    // تحديث عرض السجل إذا كان مفتوحاً
+                    if (this.state.currentSection === 'history') {
+                        this.loadHistory();
+                    }
+                }
+            }
+
+            async loadFavorites() {
+                const container = document.getElementById('favoritesAnime');
+                const emptyState = document.getElementById('favoritesEmpty');
+                
+                if (this.state.favorites.length === 0) {
+                    if (container) container.innerHTML = '';
+                    if (emptyState) emptyState.style.display = 'block';
+                    return;
+                }
+                
+                if (emptyState) emptyState.style.display = 'none';
+                
+                try {
+                    // تحميل تفاصيل الأنمي المفضلة
+                    const favoriteAnime = [];
+                    
+                    for (const animeId of this.state.favorites.slice(0, 20)) {
+                        try {
+                            const response = await fetch(`https://api.jikan.moe/v4/anime/${animeId}`);
+                            if (response.ok) {
+                                const data = await response.json();
+                                if (data.data) {
+                                    favoriteAnime.push(data.data);
+                                }
+                            }
+                        } catch (error) {
+                            console.error(`❌ خطأ في تحميل الأنمي ${animeId}:`, error);
+                        }
+                    }
+                    
+                    this.renderAnimeGrid(favoriteAnime, 'favoritesAnime');
+                } catch (error) {
+                    console.error('❌ خطأ في تحميل المفضلة:', error);
+                }
+            }
+
+            async loadHistory() {
+                const container = document.getElementById('historyAnime');
+                const emptyState = document.getElementById('historyEmpty');
+                
+                if (this.state.watchHistory.length === 0) {
+                    if (container) container.innerHTML = '';
+                    if (emptyState) emptyState.style.display = 'block';
+                    return;
+                }
+                
+                if (emptyState) emptyState.style.display = 'none';
+                
+                try {
+                    // تحميل تفاصيل الأنمي من السجل
+                    const historyAnime = [];
+                    const uniqueIds = new Set();
+                    
+                    for (const entry of this.state.watchHistory.slice(0, 20)) {
+                        if (!uniqueIds.has(entry.animeId)) {
+                            uniqueIds.add(entry.animeId);
+                            
+                            try {
+                                const response = await fetch(`https://api.jikan.moe/v4/anime/${entry.animeId}`);
+                                if (response.ok) {
+                                    const data = await response.json();
+                                    if (data.data) {
+                                        historyAnime.push(data.data);
+                                    }
+                                }
+                            } catch (error) {
+                                console.error(`❌ خطأ في تحميل الأنمي ${entry.animeId}:`, error);
+                            }
+                        }
+                    }
+                    
+                    this.renderAnimeGrid(historyAnime, 'historyAnime');
+                } catch (error) {
+                    console.error('❌ خطأ في تحميل سجل المشاهدة:', error);
+                }
+            }
+
+            // البحث
+            async searchAnime() {
+                const query = document.getElementById('searchBox').value.trim();
+                if (!query) {
+                    this.showNotification('يرجى إدخال كلمة البحث', 'error');
+                    return;
+                }
+                
+                try {
+                    const response = await fetch(`https://api.jikan.moe/v4/anime?q=${encodeURIComponent(query)}&limit=20`);
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    const data = await response.json();
+                    
+                    this.state.searchResults = data.data || [];
+                    this.renderSearchResults();
+                    this.switchSection('search');
+                    
+                } catch (error) {
+                    console.error('❌ خطأ في البحث:', error);
+                    this.showNotification('خطأ في البحث', 'error');
+                }
+            }
+
+            async searchByCategory(categoryName) {
+                try {
+                    const response = await fetch(`https://api.jikan.moe/v4/anime?genres=${this.getCategoryId(categoryName)}&limit=20`);
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    const data = await response.json();
+                    
+                    this.state.searchResults = data.data || [];
+                    this.renderSearchResults();
+                    this.switchSection('search');
+                    
+                    this.showNotification(`نتائج البحث في ${categoryName}`, 'info');
+                } catch (error) {
+                    console.error('❌ خطأ في البحث بالتصنيف:', error);
+                    this.showNotification('خطأ في البحث بالتصنيف', 'error');
+                }
+            }
+
+            getCategoryId(categoryName) {
+                const categoryMap = {
+                    'أكشن': 1,
+                    'مغامرة': 2,
+                    'كوميديا': 4,
+                    'دراما': 8,
+                    'فانتازيا': 10,
+                    'رومانسية': 22,
+                    'خيال علمي': 24,
+                    'رياضة': 30,
+                    'غموض': 7,
+                    'نفسي': 40,
+                    'أوفا': 0,
+                    'أونا': 0
+                };
+                return categoryMap[categoryName] || 0;
+            }
+
+            renderSearchResults() {
+                const container = document.getElementById('searchResultsGrid');
+                const info = document.getElementById('searchInfo');
+                
+                if (info) {
+                    info.textContent = `عُثر على ${this.state.searchResults.length} نتيجة`;
+                }
+                
+                if (container) {
+                    this.renderAnimeGrid(this.state.searchResults, 'searchResultsGrid');
+                }
+            }
+
+            handleSearchInput(e) {
+                const query = e.target.value.trim();
+                const resultsContainer = document.getElementById('searchResults');
+                
+                if (query.length < 2) {
+                    if (resultsContainer) {
+                        resultsContainer.style.display = 'none';
+                    }
+                    return;
+                }
+                
+                if (resultsContainer) {
+                    resultsContainer.innerHTML = `
+                        <div class="search-result-item">
+                            <i class="fas fa-search"></i>
+                            <div class="info">
+                                <h4>البحث عن: ${query}</h4>
+                                <p class="meta">اضغط Enter للبحث الكامل</p>
+                            </div>
+                        </div>
+                    `;
+                    resultsContainer.style.display = 'block';
+                }
+            }
+
+            // الإشعارات
+            showNotification(message, type = 'info') {
+                const notification = document.getElementById('notification');
+                const text = document.getElementById('notificationText');
+                
+                if (!notification || !text) return;
+                
+                text.textContent = message;
+                
+                // تحديد اللون حسب النوع
+                if (type === 'error') {
+                    notification.style.background = 'var(--accent-red)';
+                } else if (type === 'success') {
+                    notification.style.background = 'var(--accent-green)';
+                } else {
+                    notification.style.background = 'var(--accent-blue)';
+                }
+                
+                notification.style.display = 'flex';
+                
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        // تهيئة التطبيق
+        const app = new RiyadAnimeApp();
+        window.app = app;
+
+        // تطبيق السمة المحفوظة
+        document.addEventListener('DOMContentLoaded', () => {
+            // تطبيق السمة المحفوظة
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.body.classList.toggle('dark-theme', savedTheme === 'dark');
+            document.getElementById('themeSwitch').checked = savedTheme === 'dark';
+        });
+    </script>
+</body>
+</html>
